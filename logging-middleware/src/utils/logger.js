@@ -52,11 +52,13 @@ const log = async (
         if (!allowedPackages.includes(packageName))
             throw new Error("Invalid package");
 
+        const safeMessage = message.length > 48 ? message.slice(0, 45) + "..." : message;
+
         await loggerAPI.post("/logs", {
             stack,
             level,
             package: packageName,
-            message,
+            message: safeMessage,
         });
 
     } catch (error) {
